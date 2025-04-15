@@ -1,0 +1,50 @@
+Create a social networking website login page using phishing techniques.
+In this we will see social engineering attacks. Here we will create fake SE webpages like facebook, linkedin or others and send to the victim. When the victim access that fake page, we can trap his/her credentials.
+1.	Go to SE toolkit by clicking at the left top corner (All applications)
+2.	Select Social Engineering tools->Social Engineering toolkit and enter password
+3.	From the menu select 1 (Social Engineering attacks)
+4.	From types select 2(Website Attack Vectors)
+5.	From the menu select 3 (credentials harvestor  attack method)
+6.	After that select 1 (Web Templates)
+7.	Enter the IP Address which is displayed there (10.0.2.15).
+8.	Select 2 or 3( google or twitter)
+9.	After that, it will create fake page for google/twitter at 10.0.2.15.
+10.	Check by opening the site in the browser.
+11.	Enter the credentials like username and password.
+12.	The entered username and password are trapped in the console.
+13.	Explore different SE attacks and record.
+
+Trace the mobile location of the target machine
+Tools Used :- seeker, cloudflared, hound
+Steps for seeker
+1.	Download seeker from github. Search for seeker in github , copy the code.
+2.	At kali terminal, type  $git clone https://github.com/thewhiteh4t/seeker.git
+3.	It will download the seeker
+4.	Now check with $ls
+5.	It should give seeker folder. Go to seeker folder with $cd seeker
+6.	In seeker folder, $ls, you will get seeker.py file.
+7.	Execute this with the cmd $geet/seeker>python3 seeker.py
+8.	It will start seeker application. Select any option 0-7 (lets say u choose 2 for watsapp)
+9.	Give the group name as :Gifts
+10.	Give the group icon path (download and png file in KL and give that path)
+11.	Give as /home/geet/Downloads/giftbox.png
+12.	It will give port as 8080 and server will start
+13.	It will wait for client’s action.
+14.	We can open it in our own browser by typing localhost:8080 in the address bar.
+15.	We can get the entire  mobile location in the seeker cmd promt. Copy the url and open in google maps. We will get the target phone location.
+
+Using cloudflare tool 
+16.	Cloudflare Tunnel :- Allows users to create a locally-managed tunnel
+17.	Can be installed as a system service on Linux
+18.	Can be used to preview local projects
+19.	Cloudflare tunnel is used to create the link of the application on the local machine to be used in the internet and external link
+20.	In the google search bar type github cloudflare releases.
+21.	Go to the site and navigate to the releases list.
+22.	Scrolldown and under Assets section locate for cloudflare-linux-amd64  link.
+23.	Long press on it and we will get the download link.
+24.	Copy the download link, go to terminal and type $wget https://github.com/cloudflare/cloudflared/releases/download/2025.1.1/cloudflared-linux-amd64
+25.	It will download the cloudflare tool.
+26.	But it can’t be used as command.
+27.	So to make it as command type $chmod +x cloudflare-linux-amd64 which will convert it into command
+28.	Next type the command as $.\cloudflared-linux-amd64 tunnel  - url locahost:8080
+

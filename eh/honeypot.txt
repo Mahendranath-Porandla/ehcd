@@ -1,0 +1,69 @@
+Aim:-  Setup a honey pot and monitor the honey pot on network using Kali Linux.
+Steps to follow
+1.	Open Kali Linux with user name password
+2.	We can use Pentbox honey pot for this purpose.
+3.	Open pentbox honeypot in browser. Choose Github clone version for the lab sessions.
+4.	Copy the github clone link for accessing honeypot
+Link is https://github.com/technicaldada/pentbox.git
+5.	Open Kali Terminal and type >> git clone https://github.com/technicaldada/pentbox.git
+6.	Make sure all the packages are downloading.
+7.	Once download is complete go to pentbox 1.8 folder (cd pentbox 1.8)
+8.	Type ls . It will display all the files and folders in the pentbox 1.8 folder.
+9.	You will also find one tar file named pentbox.tar.gz. Untar it with the following command >> tar xvzf pentbox.tar.gz
+10.	All the files will be downloaded.
+11.	After downloading go to pentbox-1.8 folder with cd command again type ls command to check the folder contents. You will find pentbox.rb.
+12.	Execute the file with ./pentbox.rb command.
+13.	It will display all the tools it in. Select option 2 – Network Tools, select option 3-Honeypots.
+14.	First Select option 1- Fast Auto Configuaration.
+15.	It will set up the honeypot automatically. Now observe for the suspicious activity at the honeypot.
+16.	To observe it, open another terminal and type ifconfig to check own IP address.
+17.	Open new browser and type the same IP address in the address bar.
+18.	In the browser you will get some out. But if u observe the pentbox terminal you will get the following output.
+
+INTRUSION ATTEMPT DETECTED! from 10.0.2.15:55454 (2024-07-10 13:40:53 +0530)
+ -----------------------------
+GET / HTTP/1.1
+Host: 10.0.2.15
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+19.	Close the honeypot by typing (ctrl+c)
+20.	Next set up the honeypot manually by following steps 12 and 13.
+21.	Select option 2- set up honeypot manually.
+22.	For Insert port to open – type 80/23
+23.	For Insert false message to show – type “hi”.
+24.	For net 2 options type n and y.
+25.	You will get “ Your honey pot id activated at port 23”
+26.	To test it , open another terminal and type the nmap command as >>nmap –p23 10.0.2.15.
+27.	It will show that port 23 is open at the give IP address.
+28.	Type the command >> nc –nv  10.0.2.15 23
+29.	You will see that intrusion detection is detected  in pentbox terminal.
+
+Monitor the ssh connection
+To monitor the ssh connection, first we need to setup ssh connection in Kali.
+Setup and Configure SSH in Kali Linux
+1.	SSH is used remotely login into the system.
+2.	If we want to remotely login into kali, kali need to be set to use bridged adapter in network settings. Switch on kali and follow the steps at the terminal.
+3.	Enable the ssh in kali as follows
+i.	sudo apt update // to update
+ii.	sudo apt install openssh-server // to install ssh server
+iii.	sudo systemctl start ssh //start ssh server
+iv.	sudo systemctl enable ssh //enable ssh on bootup
+v.	sudo systemctl status ssh //check the status of ssh
+vi.	sudo systemctl restart ssh //restart the ssh services 
+4.	In order to remote access kali from windows host, we can use putty as client.
+5.	Download putty from https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+6.	Download putty x86 64 bit version.
+7.	Open putty and type 192.168.1.3(IP address of Kali in Bridged adapter mode) at the destination address.
+8.	 
+9.	Accept the pair and we will the following screen
+10.	Next set up the honeypot manually by following steps 12 and 13 from above steps.
+11.	Select option 2- set up honeypot manually.
+12.	For Insert port to open – type 23
+13.	For net 2 options type n and y.
+14.	You will get “ Your honey pot id activated at port 23”
+15.	Go to putty and and connect to kali using port 23 (instead of port 22).
+16.	The honeypot will show that “some intrusion is there at the ssh/telnet shell.
